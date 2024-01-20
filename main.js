@@ -53,7 +53,70 @@ function processData() {
     }
 
     console.log('Count of Grass-type Pokémon: ' + grassPokemonCount);
+    console.log(findMegaPokemon(parsedDataGlobal));
 }
 
 // Call handleCSVData with processData as the callback
 handleCSVData(processData);
+
+let bulbasaurTypePokemon = [];
+const FindBulbasaurButton = document.getElementById("findBulbButton");
+const FindBulbasaurOutput = document.getElementById('output');
+
+function sortBulbasaurTypePokemon(pokemonList) {
+    bulbasaurTypePokemon = [];
+    for (let bulb of pokemonList) {
+        if (bulb.Original_Name === "Bulbasaur") {
+                bulbasaurTypePokemon.push(bulb.Name);
+            }
+    }
+    bulbasaurTypePokemon.sort();
+    FindBulbasaurOutput.innerText = bulbasaurTypePokemon;
+    console.log(sortBulbasaurTypePokemon);
+    return bulbasaurTypePokemon;
+};
+
+FindBulbasaurButton.addEventListener('click', () => {
+    let sortedArray = sortBulbasaurTypePokemon(parsedDataGlobal);
+    console.log(sortedArray); 
+});
+
+let monsterTypePokemon = [];
+const findMonsterPokemonButton = document.getElementById('findMonsterButton');
+const findMonsterPokemonOutput = document.getElementById("monsterOutput");
+
+function findMonsterPokemonFunction(pokemonList) {
+    monsterPokemonArray = [];
+    for (let monster of pokemonList) {
+        if (monster.Egg_Group1 === 'Monster') {
+            monsterPokemonArray.push(monster.Name);
+        }
+    }
+    monsterPokemonArray.sort();
+    if (monsterPokemonArray.length > 1) {
+        findMonsterPokemonOutput.innerText = "Monster Pokémon: " + monsterPokemonArray.slice(0, -1).join(', ') + ' and ' + monsterPokemonArray[monsterPokemonArray.length - 1];
+    } else if (monsterPokemonArray.length === 1) {
+        findMonsterPokemonOutput.innerText = "Monster Pokémon: " + monsterPokemonArray[0];
+    } else {
+        findMonsterPokemonOutput.innerText = "No Monster Pokémon found.";
+    }
+    
+    // findMonsterPokemonOutput.innerText = monsterPokemonArray;
+    console.log(monsterTypePokemon);
+    return monsterPokemonArray;
+}
+
+findMonsterPokemonButton.addEventListener('click', () => {
+    let sortedArray = findMonsterPokemonFunction(parsedDataGlobal);
+    console.log(sortedArray);
+})
+
+const findMegaPokemon = (pokemonList) => {
+    let megaPokemonArray = pokemonList.filter(pokemon => pokemon.Name && pokemon.Name.includes('Mega'));
+    return megaPokemonArray;
+}
+
+
+
+
+// "My PS5 Collection: " + ps5Games.slice(0, -1).join(', ') + ' and ' + ps5Games[ps5Games.length - 1]
